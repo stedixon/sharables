@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
+import Home from './components/Home';
+import Settings from './components/Settings';
+import MenuBar from './components/MenuBar';
 
 interface LoginFormData {
   username: string;
@@ -12,6 +15,8 @@ interface LoginResponse {
   token?: string;
 }
 
+export type Page = 'login' | 'home' | 'settings';
+
 function App() {
   const [formData, setFormData] = useState<LoginFormData>({
     username: '',
@@ -19,6 +24,8 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<Page>('login');
+  const [username, setUsername] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,10 +53,16 @@ function App() {
 
       if (data.success) {
         setMessage('Login successful!');
+        setUsername(formData.username);
         // Store token in localStorage or context
         if (data.token) {
           localStorage.setItem('authToken', data.token);
         }
+        // Navigate to home page after successful login
+        setTimeout(() => {
+          setCurrentPage('home');
+          setMessage('');
+        }, 1000);
       } else {
         setMessage(data.message || 'Login failed');
       }
@@ -61,45 +74,84 @@ function App() {
     }
   };
 
+  const handleNavigate = (page: Page) => {
+    setCurrentPage(page);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setCurrentPage('login');
+    setUsername('');
+    setFormData({ username: '', password: '' });
+    setMessage('');
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'login':
+        return (
+          <div className="login-container">
+            <div className="login-form-wrapper">
+              <h1>Welcome to Sharables</h1>
+              <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <label htmlFor="username">Username:</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+              <button type="submit" disabled={isLoading} className="login-button">
+                {isLoading ? 'Logging in...' : 'Login'}
+              </button>
+            </form>
+            {message && (
+              <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
+                {message}
+              </div>
+            )}
+            </div>
+          </div>
+        );
+      
+      case 'home':
+        return <Home username={username} />;
+      
+      case 'settings':
+        return <Settings username={username} />;
+      
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="App">
-      <div className="login-container">
-        <h1>Welcome to Sharables</h1>
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          <button type="submit" disabled={isLoading} className="login-button">
-            {isLoading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
-        {message && (
-          <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
-            {message}
-          </div>
-        )}
-      </div>
+      {currentPage !== 'login' && (
+        <MenuBar 
+          username={username} 
+          onNavigate={handleNavigate} 
+          onLogout={handleLogout} 
+        />
+      )}
+      {renderPage()}
     </div>
   );
 }

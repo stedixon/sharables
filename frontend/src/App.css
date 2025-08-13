@@ -1,10 +1,6 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .login-container {
@@ -14,7 +10,13 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  margin: 0 1rem;
+  margin: 0 auto;
+  margin-top: 10vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-container h1 {
@@ -22,6 +24,15 @@
   margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.login-form-wrapper {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
 .login-form {

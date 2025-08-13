@@ -75,9 +75,19 @@ The frontend will start on `http://localhost:3000`
 
 ## Features
 
+### User Interface
+- **Login Screen**: Secure authentication with username/password
+- **Home Dashboard**: Personalized welcome page with feature overview
+- **Settings Panel**: Account preferences, notifications, and security options
+- **Navigation Menu**: Dropdown menu with Home, Settings, and Logout options
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+
 ### Frontend
 - **TypeScript**: Full TypeScript support with proper type definitions
 - **Modern UI**: Clean, responsive login form with gradient background
+- **Navigation**: Menu bar with dropdown navigation (Home, Settings)
+- **Home Page**: Welcome screen with user information and feature cards
+- **Settings Page**: User preferences and account management
 - **Form Validation**: Client-side validation and error handling
 - **Loading States**: Visual feedback during authentication
 - **Token Storage**: JWT token storage in localStorage
