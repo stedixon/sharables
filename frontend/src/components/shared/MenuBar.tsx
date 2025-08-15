@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './MenuBar.css';
-import type { Page } from '../App';
+import type { Page } from '../../App';
 
 interface MenuBarProps {
   username: string;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import Home from './components/Home';
-import Settings from './components/Settings';
-import MenuBar from './components/MenuBar';
+import Home from './components/pages/Home';
+import Settings from './components/pages/Settings';
+import MenuBar from './components/shared/MenuBar';
+import TextInput from './components/shared/TextInput';
 
 interface LoginFormData {
   username: string;
@@ -94,19 +95,25 @@ function App() {
             <div className="login-form-wrapper">
               <h1>Welcome to Sharables</h1>
               <form onSubmit={handleSubmit} className="login-form">
-              <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="form-group">
+              <TextInput
+                label="Username"
+                id='username'
+                type='text'
+                value={formData.username}
+                placeholder='username'
+                isLoading={isLoading}
+                onChange={handleInputChange}
+              />
+              <TextInput
+              label='Password'
+              id='password'
+              value={formData.password}
+              placeholder='password'
+              type='password'
+              isLoading={isLoading}
+              onChange={handleInputChange}
+              />
+              {/* <div className="form-group">
                 <label htmlFor="password">Password:</label>
                 <input
                   type="password"
@@ -117,7 +124,7 @@ function App() {
                   required
                   disabled={isLoading}
                 />
-              </div>
+              </div> */}
               <button type="submit" disabled={isLoading} className="login-button">
                 {isLoading ? 'Logging in...' : 'Login'}
               </button>
