@@ -38,7 +38,9 @@ const MenuBar: React.FC<MenuBarProps> = ({ username, onNavigate, onLogout }) => 
     <nav className="menu-bar">
       <div className="menu-container">
         <div className="logo">
-          <h2>Sharables</h2>
+          <button className="logo-button" onClick={() => handleMenuClick('home')}>
+            <h2>Sharables</h2>
+          </button>
         </div>
         
         <div className="menu-right">

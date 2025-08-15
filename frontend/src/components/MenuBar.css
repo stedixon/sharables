@@ -26,6 +26,12 @@
   font-weight: 700;
 }
 
+.logo-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .menu-right {
   display: flex;
   align-items: center;
