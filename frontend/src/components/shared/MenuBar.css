@@ -16,7 +16,7 @@
   height: 70px;
 }
 
-.logo h2 {
+/* .logo h2 {
   margin: 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -24,6 +24,10 @@
   background-clip: text;
   font-size: 1.8rem;
   font-weight: 700;
+} */
+
+.logo img {
+  min-height: 70px;
 }
 
 .logo-button {

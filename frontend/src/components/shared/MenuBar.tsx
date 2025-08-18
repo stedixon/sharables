@@ -39,7 +39,8 @@ const MenuBar: React.FC<MenuBarProps> = ({ username, onNavigate, onLogout }) => 
       <div className="menu-container">
         <div className="logo">
           <button className="logo-button" onClick={() => handleMenuClick('home')}>
-            <h2>Sharables</h2>
+            <img src={require('../../full-logo.svg').default} alt='Sharables'/>
+           
           </button>
         </div>
         
