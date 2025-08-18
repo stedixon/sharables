@@ -1,79 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Home from './components/pages/Home';
 import Settings from './components/pages/Settings';
+import Login from './components/pages/Login';
 import MenuBar from './components/shared/MenuBar';
-import TextInput from './components/shared/TextInput';
-
-interface LoginFormData {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  success: boolean;
-  message: string;
-  token?: string;
-}
 
 export type Page = 'login' | 'home' | 'settings';
 
 function App() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    username: '',
-    password: ''
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<Page>('login');
   const [username, setUsername] = useState<string>('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage('');
-
-    try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data: LoginResponse = await response.json();
-
-      if (data.success) {
-        setMessage('Login successful!');
-        setUsername(formData.username);
-        // Store token in localStorage or context
-        if (data.token) {
-          localStorage.setItem('authToken', data.token);
-        }
-        // Navigate to home page after successful login
-        setTimeout(() => {
-          setCurrentPage('home');
-          setMessage('');
-        }, 1000);
-      } else {
-        setMessage(data.message || 'Login failed');
-      }
-    } catch (error) {
-      setMessage('Error connecting to server. Please try again.');
-      console.error('Login error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleNavigate = (page: Page) => {
     setCurrentPage(page);
@@ -81,63 +17,16 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    setCurrentPage('login');
     setUsername('');
-    setFormData({ username: '', password: '' });
-    setMessage('');
+    setCurrentPage('login');
   };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'login':
-        return (
-          <div className="login-container">
-            <div className="login-form-wrapper">
-              <h1>Welcome to Sharables</h1>
-              <form onSubmit={handleSubmit} className="login-form">
-              <TextInput
-                label="Username"
-                id='username'
-                type='text'
-                value={formData.username}
-                placeholder='username'
-                isLoading={isLoading}
-                onChange={handleInputChange}
-              />
-              <TextInput
-              label='Password'
-              id='password'
-              value={formData.password}
-              placeholder='password'
-              type='password'
-              isLoading={isLoading}
-              onChange={handleInputChange}
-              />
-              {/* <div className="form-group">
-                <label htmlFor="password">Password:</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-              </div> */}
-              <button type="submit" disabled={isLoading} className="login-button">
-                {isLoading ? 'Logging in...' : 'Login'}
-              </button>
-            </form>
-            {message && (
-              <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
-                {message}
-              </div>
-            )}
-            </div>
-          </div>
-        );
-      
+        return <Login 
+        setCurrentPage={setCurrentPage}
+        setUsername={setUsername} />
       case 'home':
         return <Home username={username} />;
       
