@@ -6,7 +6,10 @@ interface SettingsProps {
 }
 
 const Settings: React.FC<SettingsProps> = ({ username }) => {
-  const [notifications, setNotifications] = useState(true);
+  const [notifications, setNotifications] = useState({
+    email: true,
+    sms: false
+  });
   const [darkMode, setDarkMode] = useState(false);
   const [language, setLanguage] = useState('en');
 
@@ -14,6 +17,14 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
     // In a real app, this would save to the backend
     console.log('Settings saved:', { notifications, darkMode, language });
     alert('Settings saved successfully!');
+  };
+
+  const handleNotificationToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNotifications(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
@@ -37,8 +48,8 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
             <input
               type="checkbox"
               id="notifications"
-              checked={notifications}
-              onChange={(e) => setNotifications(e.target.checked)}
+              checked={notifications.email}
+              onChange={(e) => handleNotificationToggle(e)}
             />
           </div>
           

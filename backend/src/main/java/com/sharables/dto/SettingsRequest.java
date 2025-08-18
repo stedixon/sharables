@@ -1,0 +1,55 @@
+package com.sharables.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sharables.enums.Languages;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public class SettingsRequest {
+
+    @NotBlank(message = "Username is required")
+    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+    private String username;
+
+    private List<Notification> notifications;
+    private boolean darkMode;
+    private Languages language = Languages.ENGLISH;
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<Notification> geNotifications() {
+        return this.notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        if (this.notifications == null) {
+            notifications = new ArrayList<Notification>();
+        }
+        notifications.add(notification);
+    }
+
+    public boolean getDarkMode() {
+        return this.darkMode;
+    }
+
+    public void setDarkMode(boolean darkMode) {
+        this.darkMode = darkMode;
+    }
+
+    public Languages getLanguage() {
+        return this.language;
+    }
+}
