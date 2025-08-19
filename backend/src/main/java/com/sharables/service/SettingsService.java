@@ -13,6 +13,9 @@ public class SettingsService {
             SettingsResponse response = new SettingsResponse();
             response.setSuccess(true);
             response.setMessage("Settings successfully added");
+            response.setDarkMode(settingsRequest.getDarkMode());
+            response.setNotifications(settingsRequest.geNotifications());
+            response.setUsername(settingsRequest.getUsername());
             return response;
         } else {
             SettingsResponse response = new SettingsResponse();

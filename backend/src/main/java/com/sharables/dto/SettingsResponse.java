@@ -40,7 +40,7 @@ public class SettingsResponse {
         this.username = username;
     }
 
-    public List<Notification> geNotifications() {
+    public List<Notification> getNotifications() {
         return this.notifications;
     }
 

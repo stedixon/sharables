@@ -31,4 +31,13 @@ public class Notification {
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
     }
+
+    @Override
+    public String toString() {
+        return "Notifications["
+        + "type=" + type
+        + ", contactInfo=" + contactInfo
+        + ", allowContact=" + allowContact
+        + "]";
+    }
 }
