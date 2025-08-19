@@ -17,7 +17,6 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
 
   const handleSave = async () => {
     // In a real app, this would save to the backend
-    console.log('Settings saved:', { notifications, darkMode, language });
     try {
       const settings: SettingsRequest = {
         username: username,
@@ -114,7 +113,7 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
 
         <div className="settings-actions">
           <button className="save-btn" onClick={handleSave}>
-            Save Changes
+            {isLoading ? 'Saving Changes...' : 'Save Changes'}
           </button>
         </div>
       </div>
