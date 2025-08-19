@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Settings.css';
+import { setSettings, SettingsRequest, SettingsResponse } from '../../api/Settings';
 
 interface SettingsProps {
   username: string;
@@ -12,18 +13,43 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
   });
   const [darkMode, setDarkMode] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // In a real app, this would save to the backend
     console.log('Settings saved:', { notifications, darkMode, language });
-    alert('Settings saved successfully!');
+    try {
+      const settings: SettingsRequest = {
+        username: username,
+        darkMode: darkMode,
+        language: language,
+        notifications:[{
+          type: 'EMAIL',
+          contactInfo: 'test@email.com',
+          allowContact: notifications.email
+        }]
+      }
+
+      const data: SettingsResponse = await setSettings(localStorage.getItem('authToken'), settings);
+
+      if (data.success) {
+        alert('Settings saved successfully!');
+      } else {
+        alert('Failed to save settings');
+      }
+    } catch (error) {
+      alert('Error connecting to server. Please try again.');
+      console.error('Settings error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleNotificationToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, checked } = e.target;
     setNotifications(prev => ({
       ...prev,
-      [name]: value
+      [name]: checked
     }));
   };
 
@@ -49,7 +75,8 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
               type="checkbox"
               id="notifications"
               checked={notifications.email}
-              onChange={(e) => handleNotificationToggle(e)}
+              name='email'
+              onChange={handleNotificationToggle}
             />
           </div>
           
@@ -59,6 +86,7 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
               type="checkbox"
               id="darkMode"
               checked={darkMode}
+              name='darkMode'
               onChange={(e) => setDarkMode(e.target.checked)}
             />
           </div>
@@ -71,9 +99,9 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
               onChange={(e) => setLanguage(e.target.value)}
             >
               <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
+              {/* <option value="es">Spanish</option> */}
+              {/* <option value="fr">French</option> */}
+              {/* <option value="de">German</option> */}
             </select>
           </div>
         </div>
