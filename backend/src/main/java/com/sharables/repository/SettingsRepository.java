@@ -2,9 +2,12 @@ package com.sharables.repository;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.sharables.dto.SettingsRequest;
 import com.sharables.dto.SettingsResponse;
 
+@Repository
 public class SettingsRepository {
 
     public Optional<SettingsResponse> saveSettings(SettingsRequest settingsRequest) {
