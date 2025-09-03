@@ -39,21 +39,20 @@ public class SettingsService {
 
     }
 
-    public SettingsResponse saveSettings(SettingsRequest settingsRequest) throws Exception {
+    public SettingsResponse saveSettings(String id, SettingsRequest settingsRequest) throws Exception {
         try {
-            settingsRequest.setId(UUID.randomUUID().toString());
-            return settingsRepository.saveSettings(settingsRequest);
+            return settingsRepository.saveSettings(id, settingsRequest);
         } catch(Exception e) {
-            System.out.println("Error while saving user id " + settingsRequest.getId());
+            System.out.println("Error while saving user id " + id);
             throw e;
         }
     }
 
-    public SettingsResponse updateSettings(SettingsRequest settingsRequest) throws Exception {
+    public SettingsResponse updateSettings(String id, SettingsRequest settingsRequest) throws Exception {
         try {
-            return settingsRepository.updateSettings(settingsRequest);
+            return settingsRepository.updateSettings(id, settingsRequest);
         } catch(Exception e) {
-            System.out.println("Error while updating user id " + settingsRequest.getId());
+            System.out.println("Error while updating user id " + id);
             throw e;
         }
     }
