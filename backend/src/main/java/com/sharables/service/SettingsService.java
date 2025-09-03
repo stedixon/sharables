@@ -5,6 +5,7 @@ import com.sharables.dto.SettingsResponse;
 import com.sharables.repository.SettingsRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,19 +18,43 @@ public class SettingsService {
         this.settingsRepository = settingsRepository;
     }
 
-    public SettingsResponse saveSettings(SettingsRequest settingsRequest) {
-        Optional<SettingsResponse> response = settingsRepository.saveSettings(settingsRequest);
-        
-        if (response.isPresent()) {
-            SettingsResponse settings = response.get();
-            settings.setSuccess(true);
-            settings.setMessage("Settings successfully added");
-            return settings;
-        } else {
-            SettingsResponse failedResponse = new SettingsResponse();
-            failedResponse.setSuccess(false);
-            failedResponse.setMessage("Failed to save settings");
-            return failedResponse;
+    public SettingsResponse getSettings(String id) throws Exception {
+        try {
+            Optional<SettingsResponse> response = settingsRepository.getSettings(id);
+            if (response.isPresent()) {
+                SettingsResponse settings = response.get();
+                settings.setSuccess(true);
+                settings.setMessage("Settings successfully found");
+                return settings;
+            } else {
+                SettingsResponse failedResponse = new SettingsResponse();
+                failedResponse.setSuccess(false);
+                failedResponse.setMessage("Failed to find settings for user " + id);
+                return failedResponse;
+            }
+        } catch(Exception e) {
+            System.out.println("Error while getting user id " + id);
+            throw e;
+        }
+
+    }
+
+    public SettingsResponse saveSettings(SettingsRequest settingsRequest) throws Exception {
+        try {
+            settingsRequest.setId(UUID.randomUUID().toString());
+            return settingsRepository.saveSettings(settingsRequest);
+        } catch(Exception e) {
+            System.out.println("Error while saving user id " + settingsRequest.getId());
+            throw e;
+        }
+    }
+
+    public SettingsResponse updateSettings(SettingsRequest settingsRequest) throws Exception {
+        try {
+            return settingsRepository.updateSettings(settingsRequest);
+        } catch(Exception e) {
+            System.out.println("Error while updating user id " + settingsRequest.getId());
+            throw e;
         }
     }
 }
