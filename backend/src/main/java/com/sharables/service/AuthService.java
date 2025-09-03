@@ -13,6 +13,7 @@ public class AuthService {
             LoginResponse response = new LoginResponse();
             response.setSuccess(true);
             response.setMessage("Login successful");
+            //make sure the user's id is included in this token
             response.setToken("sample-jwt-token-" + System.currentTimeMillis());
             return response;
         } else {

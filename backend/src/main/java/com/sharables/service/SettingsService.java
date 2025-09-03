@@ -5,6 +5,7 @@ import com.sharables.dto.SettingsResponse;
 import com.sharables.repository.SettingsRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -39,14 +40,20 @@ public class SettingsService {
     }
 
     public SettingsResponse saveSettings(SettingsRequest settingsRequest) throws Exception {
-
         try {
-            SettingsResponse response = settingsRepository.saveSettings(settingsRequest);
-            response.setSuccess(true);
-            response.setMessage("Settings successfully added");
-            return response;
+            settingsRequest.setId(UUID.randomUUID().toString());
+            return settingsRepository.saveSettings(settingsRequest);
         } catch(Exception e) {
-            System.out.println("Error while saving user id " + settingsRequest.getUsername());
+            System.out.println("Error while saving user id " + settingsRequest.getId());
+            throw e;
+        }
+    }
+
+    public SettingsResponse updateSettings(SettingsRequest settingsRequest) throws Exception {
+        try {
+            return settingsRepository.updateSettings(settingsRequest);
+        } catch(Exception e) {
+            System.out.println("Error while updating user id " + settingsRequest.getId());
             throw e;
         }
     }

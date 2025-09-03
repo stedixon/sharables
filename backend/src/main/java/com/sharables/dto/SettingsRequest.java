@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sharables.enums.Languages;
-
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class SettingsRequest {
 
-    @NotEmpty(message = "Username is required")
+    private String id;
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     private String username;
-
-    @NotEmpty(message = "Notifications list is required")
     private List<Notification> notifications;
-
-    @NotNull(message = "Dark Mode selection is required")
     private boolean darkMode;
-
     private Languages language = Languages.ENGLISH;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return this.username;

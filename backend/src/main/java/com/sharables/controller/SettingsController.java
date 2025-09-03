@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +52,18 @@ public class SettingsController {
             SettingsResponse response = settingsService.saveSettings(settings);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("Error while saving settings for " + settings.getUsername() + ": " + e.getMessage());
+            System.out.println("Error while saving settings for " + settings.getId() + ": " + e.getMessage());
+            return new ResponseEntity<>("Failed to save settings", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<?> updateSettings(@Valid @RequestBody SettingsRequest settings) {
+        try {
+            SettingsResponse response = settingsService.updateSettings(settings);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.out.println("Error while updating settings for " + settings.getId() + ": " + e.getMessage());
             return new ResponseEntity<>("Failed to save settings", HttpStatus.BAD_REQUEST);
         }
     }
