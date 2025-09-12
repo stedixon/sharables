@@ -3,6 +3,7 @@ import TextInput from '../shared/TextInput';
 import { login, LoginResponse, LoginFormData } from '../../api/Authorization';
 import { Page } from '../../App';
 import './Login.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LoginProps {
     setCurrentPage: Dispatch<SetStateAction<Page>>;
@@ -17,6 +18,8 @@ const Login: React.FC<LoginProps> = ({ setCurrentPage, setUsername }) => {
       password: ''
     });
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setFormData({username: '', password: ''});
@@ -47,6 +50,7 @@ const Login: React.FC<LoginProps> = ({ setCurrentPage, setUsername }) => {
             }
             // Navigate to home page after successful login
             setTimeout(() => {
+              navigate('/home', { replace: true });
               setCurrentPage('home');
               setMessage('');
             }, 1000);
@@ -85,8 +89,11 @@ const Login: React.FC<LoginProps> = ({ setCurrentPage, setUsername }) => {
               onChange={handleInputChange}
             />
             <button type="submit" disabled={isLoading} className="login-button">
-              {isLoading ? 'Logging in...' : 'Login'}
+               {isLoading ? 'Logging in...' : 'Login'}
             </button>
+            <div className="register-link">
+              {"Not a member? "}<Link to={"/register"} onClick={() => setCurrentPage('register')}>Create an account</Link>
+            </div>
           </form>
           {message && (
             <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>

@@ -3,9 +3,11 @@ import './App.css';
 import Home from './components/pages/Home';
 import Settings from './components/pages/Settings';
 import Login from './components/pages/Login';
-import MenuBar from './components/shared/MenuBar';
+import Register from './components/pages/Register';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/shared/Layout';
 
-export type Page = 'login' | 'home' | 'settings';
+export type Page = 'login' | 'home' | 'settings' | 'register';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('login');
@@ -21,34 +23,17 @@ function App() {
     setCurrentPage('login');
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'login':
-        return <Login 
-        setCurrentPage={setCurrentPage}
-        setUsername={setUsername} />
-      case 'home':
-        return <Home username={username} />;
-      
-      case 'settings':
-        return <Settings username={username} />;
-      
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="App">
-      {currentPage !== 'login' && (
-        <MenuBar 
-          username={username} 
-          onNavigate={handleNavigate} 
-          onLogout={handleLogout} 
-        />
-      )}
-      {renderPage()}
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout username={username} currentPage={currentPage} onLogout={handleLogout} onNavigate={handleNavigate}/>}>
+            <Route index element = {<Login setCurrentPage={setCurrentPage} setUsername={setUsername} />}/>
+            <Route path="home" element={<Home username={username} />}/>
+            <Route path='settings' element={<Settings username={username} />}/>
+            <Route path="register" element={<Register handleNavigate={handleNavigate} setUsername={setUsername} />}/>
+          </Route>
+      </Routes>
+      </BrowserRouter>
   );
 }
 

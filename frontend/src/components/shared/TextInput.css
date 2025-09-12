@@ -28,4 +28,16 @@
     background-color: #f8f9fa;
     cursor: not-allowed;
   }
+
+  .form-group .info-message {
+    color: lightseagreen;
+  }
+
+  .form-group .warning-message {
+    color: orange;
+  }
+
+  .form-group .error-message {
+    color: red;
+  }
   

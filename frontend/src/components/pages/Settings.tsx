@@ -104,7 +104,7 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
             </select>
           </div>
         </div>
-
+{/* TODO these buttons don't do anything */}
         <div className="settings-section">
           <h3>Security</h3>
           <button className="change-password-btn">Change Password</button>

@@ -1,5 +1,13 @@
 import React from 'react';
 import './TextInput.css';
+import { FaInfoCircle } from "react-icons/fa";
+
+export enum MessageLevel {
+  INFO,
+  WARNING,
+  ERROR,
+  NONE
+}
 
 interface TextInputProps {
     id: string;
@@ -9,9 +17,23 @@ interface TextInputProps {
     placeholder?: string;
     type: string;
     value: string;
+    message?: string;
+    messageLevel?: MessageLevel;
 }
 
-const TextInput: React.FC<TextInputProps> = ({label, value, type, id, placeholder, isLoading, onChange}) => {
+const TextInput: React.FC<TextInputProps> = ({label, value, type, id, placeholder, isLoading, onChange, message, messageLevel}) => {
+
+    const getMessageClass = ():string => {
+      switch (messageLevel) {
+        case MessageLevel.INFO:
+          return "info-message";
+        case MessageLevel.WARNING:
+          return "warning-message";
+        case MessageLevel.ERROR:
+          return "error-message";
+        default: return ""
+      }
+    }
 
     return (
         <div className="form-group">
@@ -26,6 +48,11 @@ const TextInput: React.FC<TextInputProps> = ({label, value, type, id, placeholde
             required
             disabled={isLoading}
           />
+          {
+            (message !== undefined && message.length > 0) && 
+            (messageLevel !== undefined && messageLevel !== MessageLevel.NONE) && 
+            <div className={getMessageClass()}><FaInfoCircle/>{message}</div>
+          }
         </div>
     );
 };

@@ -10,7 +10,35 @@ export interface LoginFormData {
     token?: string;
   }
 
-export async function login(formData: LoginFormData): Promise<LoginResponse> {
+export interface RegisterFormData {
+    username: string;
+    password: string;
+  }
+
+export interface RegisterResponse {
+    success: boolean;
+    message: string;
+  }
+
+export async function register(formData: RegisterFormData): Promise<RegisterResponse> {
+    try {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+
+        const data: RegisterResponse = await response.json();
+        return data;
+    } catch(error) {
+        console.error("Error registering");
+        throw error;
+    }
+}
+
+  export async function login(formData: LoginFormData): Promise<LoginResponse> {
     try {
         const response = await fetch('http://localhost:8080/api/auth/login', {
             method: 'POST',

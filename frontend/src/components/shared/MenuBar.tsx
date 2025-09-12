@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './MenuBar.css';
 import type { Page } from '../../App';
+import { Link } from 'react-router-dom';
 
 interface MenuBarProps {
   username: string;
@@ -38,9 +39,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ username, onNavigate, onLogout }) => 
     <nav className="menu-bar">
       <div className="menu-container">
         <div className="logo">
-          <button className="logo-button" onClick={() => handleMenuClick('home')}>
-            <img src={require('../../full-logo.svg').default} alt='Sharables'/>
-          </button>
+          <Link to="/home">
+            <button className="logo-button" onClick={() => handleMenuClick('home')}>
+              <img src={require('../../full-logo.svg').default} alt='Sharables'/>
+            </button>
+          </Link>
         </div>
         
         <div className="menu-right">
@@ -56,25 +59,31 @@ const MenuBar: React.FC<MenuBarProps> = ({ username, onNavigate, onLogout }) => 
             
             {isDropdownOpen && (
               <div className="dropdown-menu">
+                <Link to="/home">
                 <button 
                   className="dropdown-item"
                   onClick={() => handleMenuClick('home')}
                 >
                   🏠 Home
                 </button>
+                </Link>
+                <Link to="/settings">
                 <button 
                   className="dropdown-item"
                   onClick={() => handleMenuClick('settings')}
                 >
                   ⚙️ Settings
                 </button>
+                </Link>
                 <div className="dropdown-divider"></div>
-                <button 
+                <Link to="/">
+                  <button 
                   className="dropdown-item logout"
                   onClick={onLogout}
                 >
                   🚪 Logout
                 </button>
+                </Link>
               </div>
             )}
           </div>

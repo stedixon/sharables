@@ -5,7 +5,6 @@ import com.sharables.dto.SettingsResponse;
 import com.sharables.repository.SettingsRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
