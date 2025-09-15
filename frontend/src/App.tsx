@@ -6,6 +6,7 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/shared/Layout';
+import ChangePassword from './components/pages/ChangePassword';
 
 export type Page = 'login' | 'home' | 'settings' | 'register';
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="home" element={<Home username={username} />}/>
             <Route path='settings' element={<Settings username={username} onLogout={handleLogout} />}/>
             <Route path="register" element={<Register handleNavigate={handleNavigate} setUsername={setUsername} />}/>
+            <Route path="change-password" element={<ChangePassword />}/>
           </Route>
       </Routes>
       </BrowserRouter>
