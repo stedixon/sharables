@@ -2,14 +2,33 @@ package com.sharables.service;
 
 import com.sharables.dto.LoginRequest;
 import com.sharables.dto.LoginResponse;
+import com.sharables.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
+    private UserRepository userRepository;
+
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public LoginResponse register(LoginRequest loginRequest) {
+        LoginResponse response = userRepository.addUser(loginRequest);
+        if (response.isSuccess()) {
+            //simple logic, replace this with a real token
+            response.setToken("sample-jwt-token-" + System.currentTimeMillis());
+        }
+        return response;
+    }
+
     public LoginResponse authenticate(LoginRequest loginRequest) {
-        // Simple authentication logic - in a real app, you'd check against a database
-        if ("admin".equals(loginRequest.getUsername()) && "password".equals(loginRequest.getPassword())) {
+        
+        boolean valid = userRepository.verifyCredentials(loginRequest);
+
+        if (valid) {
             LoginResponse response = new LoginResponse();
             response.setSuccess(true);
             response.setMessage("Login successful");

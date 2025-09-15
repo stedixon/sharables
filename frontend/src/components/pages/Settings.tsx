@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Settings.css';
-import { setSettings, SettingsRequest, SettingsResponse } from '../../api/Settings';
+import { setSettings, SettingsRequest, SettingsResponse, NotificationType } from '../../api/Settings';
 import { Link } from 'react-router-dom';
 
 interface SettingsProps {
@@ -25,7 +25,7 @@ const Settings: React.FC<SettingsProps> = ({ username, onLogout }) => {
         darkMode: darkMode,
         language: language,
         notifications:[{
-          type: 'EMAIL',
+          type: NotificationType.EMAIL,
           contactInfo: 'test@email.com',
           allowContact: notifications.email
         }]

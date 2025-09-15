@@ -30,4 +30,17 @@ public class AuthController {
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<LoginResponse> register(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            LoginResponse response = authService.register(loginRequest);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            LoginResponse errorResponse = new LoginResponse();
+            errorResponse.setSuccess(false);
+            errorResponse.setMessage("User creation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
 }

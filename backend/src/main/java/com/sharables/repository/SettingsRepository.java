@@ -11,7 +11,7 @@ import com.sharables.dto.SettingsResponse;
 @Repository
 public class SettingsRepository {
     // TODO this is a placeholder until a database is in place
-    // key is the user id (a UUID)
+    // key is the username which must be unique
     private final HashMap<String, SettingsRequest> tempDb;
 
     public SettingsRepository() {

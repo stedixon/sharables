@@ -1,6 +1,11 @@
 
+export enum NotificationType {
+    SMS,
+    EMAIL
+}
+
 export interface Notification {
-    type: string;
+    type: NotificationType;
     contactInfo: string;
     allowContact: boolean;
 }

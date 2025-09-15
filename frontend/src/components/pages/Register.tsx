@@ -4,7 +4,7 @@ import './Register.css';
 import TextInput, { MessageLevel } from "../shared/TextInput";
 import { register } from "../../api/Authorization";
 import { RegisterResponse } from "../../api/Authorization";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface RegisterProps {
     handleNavigate: (page: Page) => void;
@@ -27,6 +27,8 @@ const Register: React.FC<RegisterProps> = ({ handleNavigate, setUsername }) => {
     const [passwordMessage, setPasswordMessage] = useState<string>('');
     const [passwordMessageLevel, setPasswordMessageLevel] = useState<MessageLevel>(MessageLevel.NONE);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         setFormData({username: '', password: '', confirmPassword: ''});
@@ -69,8 +71,13 @@ const Register: React.FC<RegisterProps> = ({ handleNavigate, setUsername }) => {
             const data: RegisterResponse = await register(formData);
             if (data.success) {
                 setMessage('Registration successful');
+                setUsername(formData.username);
+                if (data.token) {
+                    localStorage.setItem('authToken', data.token);
+                }
                 setTimeout(() => {
-                    handleNavigate('login');
+                    handleNavigate('home');
+                    navigate("/home");
                 }, 1000);
             } else {
                 setMessage(data.message || 'Registration failed');

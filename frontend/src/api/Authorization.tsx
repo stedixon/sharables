@@ -18,6 +18,7 @@ export interface RegisterFormData {
 export interface RegisterResponse {
     success: boolean;
     message: string;
+    token?: string;
   }
 
 export async function register(formData: RegisterFormData): Promise<RegisterResponse> {
