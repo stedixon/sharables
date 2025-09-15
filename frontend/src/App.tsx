@@ -29,7 +29,7 @@ function App() {
           <Route path='/' element={<Layout username={username} currentPage={currentPage} onLogout={handleLogout} onNavigate={handleNavigate}/>}>
             <Route index element = {<Login setCurrentPage={setCurrentPage} setUsername={setUsername} />}/>
             <Route path="home" element={<Home username={username} />}/>
-            <Route path='settings' element={<Settings username={username} />}/>
+            <Route path='settings' element={<Settings username={username} onLogout={handleLogout} />}/>
             <Route path="register" element={<Register handleNavigate={handleNavigate} setUsername={setUsername} />}/>
           </Route>
       </Routes>

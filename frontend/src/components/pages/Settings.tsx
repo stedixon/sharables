@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import './Settings.css';
 import { setSettings, SettingsRequest, SettingsResponse } from '../../api/Settings';
+import { Link } from 'react-router-dom';
 
 interface SettingsProps {
   username: string;
+  onLogout: () => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ username }) => {
+const Settings: React.FC<SettingsProps> = ({ username, onLogout }) => {
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false
@@ -104,11 +106,15 @@ const Settings: React.FC<SettingsProps> = ({ username }) => {
             </select>
           </div>
         </div>
-{/* TODO these buttons don't do anything */}
+        
         <div className="settings-section">
           <h3>Security</h3>
-          <button className="change-password-btn">Change Password</button>
-          <button className="logout-btn">Logout</button>
+          <Link to="/change-password">
+            <button className="change-password-btn">Change Password</button>
+          </Link>
+          <Link to="/">
+            <button className="logout-btn" onClick={onLogout}>Logout</button>
+          </Link>
         </div>
 
         <div className="settings-actions">
