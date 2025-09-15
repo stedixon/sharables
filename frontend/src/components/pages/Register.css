@@ -58,3 +58,23 @@
     cursor: not-allowed;
     transform: none;
   }
+
+  .notification-preference {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+  }
+  
+.notification-preference label {
+  color: #555;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+  .notification-preference input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #667eea;
+  }
